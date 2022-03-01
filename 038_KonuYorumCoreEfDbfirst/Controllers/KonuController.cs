@@ -55,6 +55,7 @@ namespace _038_KonuYorumCoreEfDbfirst.Controllers
             //Konu konu = _db.Konu.First(konu => konu.Id == id);// Eğer belirtilen koşula uygun sonuç dönmezse Exception fırlatır, eğer belirtilen koşula uygun birden çok kayıt dönerse de her zaman ilk kaydı döner
 
             //Konu konu = _db.Konu.FirstOrDefault(konu => konu.Id == id);// Eğer belirtilen koşula uygun sonuç dönmezse Null döner, eğer belirtilen koşula uygun birden çok kayıt dönerse de her zaman ilk kaydı döner
+            
             //Konu konu = _db.Konu.Last(konu => konu.Id == id);// Eğer belirtilen koşula uygun sonuç dönmezse Exception fırlatır, eğer belirtilen koşula uygun birden çok kayıt dönerse de her zaman son kaydı döner
 
             //Konu konu = _db.Konu.LastOrDefault(konu => konu.Id == id);// Eğer belirtilen koşula uygun sonuç dönmezse Null döner, eğer belirtilen koşula uygun birden çok kayıt dönerse her zaman son kaydı döner
@@ -86,7 +87,11 @@ namespace _038_KonuYorumCoreEfDbfirst.Controllers
                 ViewBag.Mesaj = "Açıklama en fazla 200 karakter olmalıdır!";
                 return View(konu);
             }
-            _db.Konu.Update(konu);
+            // GÜNCELLEME ve SİLME işlemleri için veri önce mutlaka veri tabanındaki tabloda çekilmelidir ve sonra çekilen obje üzerinden GÜNCELLEME veya SİLME işlemi yapılmalıdır
+            Konu mevcutKonu = _db.Konu.SingleOrDefault(mevcutKonu => mevcutKonu.Id == konu.Id);
+            mevcutKonu.Baslik = konu.Baslik;
+            mevcutKonu.Aciklama = konu.Aciklama;
+            _db.Konu.Update(mevcutKonu);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -95,6 +100,7 @@ namespace _038_KonuYorumCoreEfDbfirst.Controllers
             // konu verileriyle birlikte Include kullanarak ilişkili yorum verileri de çekilir
             // eager loading: ihtiyaca göre yükleme, Entity Framework Core'da kullanılır
             // lazy loading: entity framework'ün otomatik olarak ilişkili verileri yüklemesi, Include kullanılmasına gerek yoktur
+            // GÜNCELLEME ve SİLME işlemleri için veri önce mutlaka veri tabanındaki tabloda çekilmelidir ve sonra çekilen obje üzerinden GÜNCELLEME veya SİLME işlemi yapılmalıdır
             Konu konu = _db.Konu.Include(k => k.Yorum).SingleOrDefault(k => k.Id == id);
 
             // 1.Yöntem: Konu ile birlikte ilişkili yorum kayıtlarının da silinmesi

@@ -12,28 +12,48 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">_038_KonuYorumCoreEfDbfirst</a>
+                @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">_038_KonuYorumCoreEfDbfirst</a>*@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+
+                       @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
+                            </li>
+                            <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                            @*Yukarıdaki menüdeki konu listesini getirmek için Konular bağlantısı (link'i)*@
+                            </li>*@
+
+
+                        @*Yukarıdaki menüdeki konu listesini getirmek için Konular bağlantısı (link'i)*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Konu" asp-action="Index">Konular</a>
                         </li>
-                            @*Yukarıdaki menüdeki yorum listesini getirmek için Yorumlar bağlantısı (link'i)*@
+                        @*Yukarıdaki menüdeki yorum listesini getirmek için Yorumlar bağlantısı (link'i)*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Yorum" asp-action="Index">Yorumlar</a>
                         </li>
-                       
+                        @*Yukarıdaki menüdeki scaffold edilmiş konu listesini getirmek için Konular bağlantısı (link'i)*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="KonuScaffolding" asp-action="Index">Konular (Scaffolding)</a>
+                        </li>
+                        @*Yukarıdaki menüdeki scaffold edilmiş yorum listesini getirmek için Yorumlar bağlantısı (link'i)*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="YorumScaffolding" asp-action="Index">Yorumlar (Scaffolding)</a>
+                        </li>
+                        @*Yukarıdaki menüdeki konu ile inner join'lenmiş yorum listesini getirmek için KonularYorumlarJoin bağlantısı (link'i)*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="KonularYorumlarJoin" asp-action="InnerJoin">Konular Yorumlar (InnerJoin)</a>
+                        </li>
+                        @*Yukarıdaki menüdeki konu ile left outer join'lenmiş yorum listesini getirmek için KonularYorumlarJoin bağlantısı (link'i)*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="KonularYorumlarJoin" asp-action="LeftOuterJoin">Konular Yorumlar (LeftOuterJoin)</a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>

@@ -24,12 +24,19 @@ View <-> Controller (Başlangıç noktası) <-> Model (entity -> context -> veri
 
 Proje geliştirme aşamaları:
 1) Konu Controller -> DbContext'ten türeyen context'in new'lenerek kullanılması
-1.1) Index Action -> Konu listesinin (model) context üzerinden Index View'ına gönderilmesi ve Index View'ının oluşturulması (View scaffolding), ~/View/Shared/_Layout.cshtml'de sayfanın yukarısındaki menüye Konular link'inin eklenmesi
-1.2) Details Action
+1.1) Index Action -> ScaffoldingTemplates altındaki dosyaların ReadMe.txt ile belirtilen klasörlere kopayalanması, konu listesinin (model) context üzerinden Index View'ına gönderilmesi ve Index View'ının oluşturulması (View scaffolding), ~/View/Shared/_Layout.cshtml'de sayfanın yukarısındaki menüye link'in eklenmesi
+1.2) Details Action -> LINQ Find methodu
 1.3) Create Action -> HttpGet ve HttpPost action method'ları, Create View'ındaki form verilerinin Create Post action'ına model olarak gönderilmesi ve veritabanında yeni kayıt oluşturulması, ViewBag ile ViewData kullanımı
-1.4) Edit Action -> LINQ Find, SingleOrDefault, FirstOrDefault ve LastOrDefault methodları
+1.4) Edit Action -> LINQ SingleOrDefault, FirstOrDefault ve LastOrDefault methodları
 1.5) Delete Action -> LINQ Include methodu ve veritabanında ilişkili kayıtların yönetilmesi, TempData kullanımı
 2) Yorum Controller
 2.1) Index Action -> OrderBy ve ThenBy kullanımı
 2.2) Details Action
-2.3) Create Action
+2.3) Create Action -> SelectList ve MultiSelectList, post methodunda gelen model üzerinden validasyon işlemleri
+2.4) Edit Action
+2.5) Delete Action -> Silinmek istenen kaydın önce sayfada gösterilmesi, onaylandıktan sonra silinmesi, ActionName kullanımı
+3) KonuScaffoldingController -> Scaffolding ile Entity Framework üzerinden controller ve view'lerin oluşturulması 
+4) YorumScaffoldingController
+5) KonularYorumlarJoinController
+5.1) InnerJoin Action -> LINQ inner join kullanımı ve inner join sonucunun yeni bir model oluşturularak scaffolding ile oluşturulan view'a gönderilmesi, view'de gönderilen modelin kullanılması ve bu modele göre değişikliklerin yapılması
+5.2) LeftOuterJoin Action -> LINQ left outer join kullanımı ve left outer join sonucunun yeni bir model oluşturularak scaffolding ile oluşturulan view'a gönderilmesi, view'de gönderilen modelin kullanılması ve bu modele göre değişikliklerin yapılması

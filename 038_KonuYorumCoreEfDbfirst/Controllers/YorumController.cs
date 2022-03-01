@@ -75,6 +75,77 @@ namespace _038_KonuYorumCoreEfDbfirst.Controllers
             }
             _db.Yorum.Add(yorum);
             _db.SaveChanges();
+            TempData["YorumMesaj"] = "Yorum başarıyla eklendi.";
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Yorum yorum = _db.Yorum.SingleOrDefault(yorum => yorum.Id == id);
+            ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(konu => konu.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+            return View(yorum);
+        }
+        [HttpPost]
+        public IActionResult Edit(Yorum yorum)
+        {
+            if (string.IsNullOrWhiteSpace(yorum.Icerik))
+            {
+                ViewBag.Mesaj = "İçerik boş girilemez!";
+                ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(k => k.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+                return View(yorum);
+            }
+            if (yorum.Icerik.Length > 500)
+            {
+                ViewBag.Mesaj = "İçerik en fazla 500 karakter olmalıdır";
+                ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(k => k.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+                return View(yorum);
+            }
+            if (string.IsNullOrWhiteSpace(yorum.Yorumcu))
+            {
+                ViewBag.Mesaj = "Yorumcu boş girilemez!";
+                ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(k => k.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+                return View(yorum);
+            }
+            if (yorum.Yorumcu.Length > 50)
+            {
+                ViewBag.Mesaj = "Yorumcu en fazla 50 karakter olmalıdır!";
+                ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(k => k.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+                return View(yorum);
+            }
+            if (yorum.Puan.HasValue)
+            {
+
+                if (!(yorum.Puan.Value >= 1 && yorum.Puan.Value <= 5))
+                {
+                    ViewBag.Mesaj = "Puan 1 ile 5 arasında olmalıdır!";
+                    ViewBag.KonuId = new SelectList(_db.Konu.OrderBy(k => k.Baslik).ToList(), "Id", "Baslik", yorum.KonuId);
+                    return View(yorum);
+                }
+            }
+            Yorum mevcutYorum = _db.Yorum.SingleOrDefault(mevcutYorum => mevcutYorum.Id == yorum.Id);
+            mevcutYorum.Icerik = yorum.Icerik;
+            mevcutYorum.Yorumcu = yorum.Yorumcu;
+            mevcutYorum.Puan = yorum.Puan;
+            mevcutYorum.KonuId = yorum.KonuId;
+            _db.Yorum.Update(mevcutYorum);
+            _db.SaveChanges();
+            TempData["YorumMesaj"] = "Yorum başarıyla güncellendi";
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Delete(int id) // ~/Yorum/Delete/1
+        {
+            Yorum yorum = _db.Yorum.Include(yorum => yorum.Konu).SingleOrDefault(yorum => yorum.Id == id);
+            return View(yorum);
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id) // ~/Yorum/Delete/
+        {
+            Yorum yorum = _db.Yorum.Find(id);
+            _db.Yorum.Remove(yorum);
+            _db.SaveChanges();
+            TempData["YorumMesaj"] = "Yorum başarıyla silindi";
             return RedirectToAction("Index");
         }
     }
